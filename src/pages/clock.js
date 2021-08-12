@@ -20,9 +20,10 @@ class Clock extends React.Component {
   }
   render() {
     return (
-      <div>
-        <h1 className="has-background-success">Hello, world!</h1>
-        <h2>It is {this.state.date.toLocaleTimeString()}.</h2>
+      <div className="hero has-background-white is-fullheight">
+        <div className="hero-body has-text-centered">
+          <div className="is-size-1 ">{this.state.date.toLocaleTimeString()}</div>
+        </div>
       </div>
     );
   }
@@ -31,5 +32,5 @@ class Clock extends React.Component {
 const RenderClock = () => {
   return <Clock />;
 };
-
+ 
 export default RenderClock;
