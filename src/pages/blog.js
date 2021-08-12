@@ -1,22 +1,19 @@
-import * as React from 'react'
-import { graphql } from 'gatsby'
-import Layout from '../components/layout'
+import * as React from "react";
+import { graphql } from "gatsby";
+import Layout from "../components/layout";
 
 const BlogPage = ({ data }) => {
   return (
     <Layout pageTitle="My Blog Posts">
+      <div>kizi ichiran</div>
       <ul>
-      {
-        data.allFile.nodes.map(node => (
-          <li key={node.name}>
-            {node.name}
-          </li>
-        ))
-      }
+        {data.allFile.nodes.map((node) => (
+          <li key={node.name}>{node.name}</li>
+        ))}
       </ul>
     </Layout>
-  )
-}
+  );
+};
 
 export const query = graphql`
   query {
@@ -26,6 +23,6 @@ export const query = graphql`
       }
     }
   }
-`
+`;
 
-export default BlogPage
+export default BlogPage;
