@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
     siteUrl: "https://www.yourdomain.tld",
-    title: "murakamiTutorial",
+    title: "murakami_blog",
   },
   plugins: [
     "gatsby-plugin-gatsby-cloud",
