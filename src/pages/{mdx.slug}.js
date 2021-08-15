@@ -6,18 +6,17 @@ import Layout from "../components/layout";
 import { Helmet } from "react-helmet";
 
 const BlogPost = ({ data }) => {
-  const image = getImage(data.mdx.frontmatter.hero_image);
+  const imagePath = data.mdx.frontmatter.hero_image;
+  const image = getImage(imagePath);
   const title = data.mdx.frontmatter.title;
   return (
     <>
       <Helmet>
-        <html lang="jp" />
-        <title>{title}</title>
         <meta property="og:site_name" content={title} />
-        <meta property="og:image" content={image} />
+        <meta property="og:image" content={imagePath} />
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:title" content={title} />
-        <meta name="twitter:image" content={image} />
+        <meta name="twitter:image" content={imagePath} />
       </Helmet>
       <Layout pageTitle={title}>
         <p>Posted: {data.mdx.frontmatter.date}</p>
