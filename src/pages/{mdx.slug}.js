@@ -13,10 +13,10 @@ const BlogPost = ({ data }) => {
     <>
       <Helmet>
         <meta property="og:site_name" content={title} />
-        <meta property="og:image" content={imagePath} />
+        <meta property="og:image" content="blog/first/cat_640px.jpg" />
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:title" content={title} />
-        <meta name="twitter:image" content={imagePath} />
+        <meta name="twitter:image" content="blog/first/cat_640px.jpg" />
       </Helmet>
       <Layout pageTitle={title}>
         <p>Posted: {data.mdx.frontmatter.date}</p>
