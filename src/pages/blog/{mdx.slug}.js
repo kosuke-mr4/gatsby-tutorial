@@ -3,7 +3,7 @@ import { graphql } from "gatsby";
 import { MDXRenderer } from "gatsby-plugin-mdx";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import { Helmet } from "react-helmet";
-import Layout from "../components/layout";
+import Layout from "../../components/layout";
 
 const BlogPost = ({ data }) => {
   const image = getImage(data.mdx.frontmatter.hero_image);
