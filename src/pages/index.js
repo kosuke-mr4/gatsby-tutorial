@@ -9,11 +9,11 @@ const BlogPage = ({ data }) => {
       <Helmet>
         <meta property="og:site_name" content="murakami blog" />
         <meta name="description" content="村上のブログ" />
-        <meta property="og:image" content="../images/shigotoneko.jpeg" />
+        <meta property="og:image" content="../images/shigotoneko.jpg" />
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:title" content="murakami blog" />
         <meta name="twitter:description" content="村上のブログ" />
-        <meta name="twitter:image" content="../images/shigotoneko.jpeg" />
+        <meta name="twitter:image" content="../images/shigotoneko.jpg" />
       </Helmet>
       <Layout pageTitle="kizi ichiran">
         {data.allMdx.nodes.map((node) => (
