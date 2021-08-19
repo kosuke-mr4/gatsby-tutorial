@@ -2,7 +2,7 @@ import * as React from "react";
 import { graphql } from "gatsby";
 import { MDXRenderer } from "gatsby-plugin-mdx";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
-import Layout from "../components/layout";
+import ArticleLayout from "../components/articleLayout";
 import { Helmet } from "react-helmet";
 
 const BlogPost = ({ data }) => {
@@ -20,11 +20,11 @@ const BlogPost = ({ data }) => {
         <meta name="twitter:title" content={title} />
         <meta name="twitter:image" content={imagePath} />
       </Helmet>
-      <Layout pageTitle={title}>
+      <ArticleLayout pageTitle={title}>
         <p>Posted: {data.mdx.frontmatter.date}</p>
         <GatsbyImage image={image} />
         <MDXRenderer>{data.mdx.body}</MDXRenderer>
-      </Layout>
+      </ArticleLayout>
     </>
   );
 };

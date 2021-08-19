@@ -15,7 +15,7 @@ const BlogPage = ({ data }) => {
         <meta name="twitter:description" content="村上のブログ" />
         <meta name="twitter:image" content="src/images/shigotoneko.jpg" />
       </Helmet>
-      <Layout pageTitle="kizi ichiran">
+      <Layout pageTitle="記事一覧">
         {data.allMdx.nodes.map((node) => (
           <article key={node.id}>
             <h2>
