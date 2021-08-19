@@ -24,7 +24,9 @@ const Layout = ({ pageTitle, children }) => {
       <title>
         {pageTitle} | {data.site.siteMetadata.title}
       </title>
-      <p className={siteTitle}>{data.site.siteMetadata.title}</p>
+      <Link to="/" style={{ textDecoration: "none" }}>
+        <div className={siteTitle}>{data.site.siteMetadata.title}</div>
+      </Link>
       <nav>
         <ul className={navLinks}>
           <li className={navLinkItem}>
