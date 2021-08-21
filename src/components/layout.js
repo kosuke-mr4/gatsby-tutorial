@@ -9,6 +9,8 @@ import {
   siteTitle,
 } from "./layout.module.css";
 
+import Footer from "./footer.js";
+
 const Layout = ({ pageTitle, children }) => {
   const data = useStaticQuery(graphql`
     query {
@@ -24,7 +26,9 @@ const Layout = ({ pageTitle, children }) => {
       <title>
         {pageTitle} | {data.site.siteMetadata.title}
       </title>
-      <p className={siteTitle}>{data.site.siteMetadata.title}</p>
+      <Link to="/" style={{ textDecoration: "none" }}>
+        <div className={siteTitle}>{data.site.siteMetadata.title}</div>
+      </Link>
       <nav>
         <ul className={navLinks}>
           <li className={navLinkItem}>
@@ -41,6 +45,7 @@ const Layout = ({ pageTitle, children }) => {
       </nav>
       <h1 className={heading}>{pageTitle}</h1>
       {children}
+      <Footer />
     </main>
   );
 };

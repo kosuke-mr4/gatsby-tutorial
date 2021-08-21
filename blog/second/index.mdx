@@ -1,8 +1,94 @@
 ---
-title: "二個目の投稿です"
+title: "JSXについて学ぶ"
 date: "2021-08-13"
 hero_image: "./cat.jpg"
 featuredImage: "./cat.jpg"
 ---
 
-とりあえず二個目を置いておくだけ
+# JSX について学ぶ
+
+### 経緯
+
+元々はこのブログに OGP をつけようとしていたのだけど全然できなくて、[@sosukesuzuki](https://github.com/sosukesuzuki)にもろもろ聞いたらそれがわからないのはヤバイと言われたので勉強がてら書いています、何か覚え次第加筆するかも。
+
+### JSX とは
+
+以下のような構文で記述される JavaScript の拡張構文のこと、
+
+```jsx
+const element = (
+  <h1 className="greeting">
+    Hello, world!
+  </h1>
+);
+```
+
+これは react 要素の生成を意味して、以下のコードを意味している。(javascript にコンパイルされる)
+
+```js
+const element = React.createElement(
+  'h1',
+  {className: 'greeting'},
+  'Hello, world!'
+);
+```
+
+React.createElement() は以下のようなオブジェクトを生成する。
+
+```js
+const element = {
+  type: 'h1',
+  props: {
+    className: 'greeting',
+    children: 'Hello, world!'
+  }
+};
+```
+
+ドキュメントにもあるけれど、JSX は React.createElement(component, props, ...children) の糖衣構文にすぎないという認識になる。
+
+JSX は React.createElement の呼び出しへとコンパイルされるので、JSXを使う場合はReact ライブラリがコードのスコープ内にある必要がある。
+```js
+import React from 'react'; //(必要)
+```
+
+### 問題の解決
+
+Gatsbyで作ったページにOGPを出したい！ということでReact Helmet を導入して、metaタグに情報を指定して Helmet で囲んだけれど一向に出ない！！となったが、これは以下のような記述をすると、
+
+
+```jsx
+<Helmet>
+    <html lang="jp" />
+    <title>{title}</title>
+    <meta property="og:site_name" content={title} />
+    <meta property="og:image" content={image} />
+</Helmet>
+```
+
+おそらくOGP取得用クローラが確認することになるコードは、jsにコンパイルされた以下のようなコードであり、
+
+```js
+/*#__PURE__*/
+React.createElement(Helmet, null, /*#__PURE__*/React.createElement("html", {
+  lang: "jp"
+}), /*#__PURE__*/React.createElement("title", null, title), /*#__PURE__*/React.createElement("meta", {
+  property: "og:site_name",
+  content: title
+}), /*#__PURE__*/React.createElement("meta", {
+  property: "og:image",
+  content: image
+}));
+```
+
+まあこの状態だとmetaタグは確認できないよな、という話でした。(100%正しいかはわかりません。)
+
+これは、[gatsby-plugin-react-helmet](https://www.gatsbyjs.com/plugins/gatsby-plugin-react-helmet/) を導入することで回避できました。
+
+ドキュメントによると
+
+>With this plugin, attributes you add in their component, e.g. title, meta attributes, etc. will get added to the static HTML pages Gatsby builds.
+
+とのことなので、これのおかげで静的htmlにmetaタグが追加されるようです。
+
+何か問題等あればisuueやPRなど作成していただければ幸いです。
