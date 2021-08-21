@@ -47,10 +47,12 @@ const element = {
 
 ドキュメントにもあるけれど、JSX は React.createElement(component, props, ...children) の糖衣構文にすぎないという認識になる。
 
-JSX は React.createElement の呼び出しへとコンパイルされるので、JSXを使う場合はReact ライブラリがコードのスコープ内にある必要がある。
-```js
-import React from 'react'; //(必要)
-```
+~~JSX は React.createElement の呼び出しへとコンパイルされるので、JSXを使う場合はReact ライブラリがコードのスコープ内にある必要がある。~~
+
+↑
+いらないらしい、[参考記事](https://ja.reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html#whats-a-jsx-transform)
+
+この記事によると、 React 17 からはそもそも React.createElement [ではない](https://ja.reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html#whats-different-in-the-new-transform)らしい
 
 ### 問題の解決
 
