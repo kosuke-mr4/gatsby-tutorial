@@ -2,6 +2,9 @@ import * as React from "react";
 import { Link, useStaticQuery, graphql } from "gatsby";
 import { heading, siteTitle } from "./layout.module.css";
 import { articleContainer } from "./articleLayout.module.css";
+
+import Footer from "./footer.js";
+
 const ArticleLayout = ({ pageTitle, children }) => {
   const data = useStaticQuery(graphql`
     query {
@@ -22,6 +25,7 @@ const ArticleLayout = ({ pageTitle, children }) => {
       </Link>
       <h1 className={heading}>{pageTitle}</h1>
       {children}
+      <Footer />
     </main>
   );
 };
