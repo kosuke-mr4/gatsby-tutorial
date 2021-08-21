@@ -3,6 +3,9 @@ import { Link, useStaticQuery, graphql } from "gatsby";
 import { heading, siteTitle } from "./layout.module.css";
 import { articleContainer } from "./articleLayout.module.css";
 
+import { MDXProvider } from "@mdx-js/react";
+import CodeBlock from "../components/codeblock";
+
 import Footer from "./footer.js";
 
 const ArticleLayout = ({ pageTitle, children }) => {
@@ -15,18 +18,27 @@ const ArticleLayout = ({ pageTitle, children }) => {
       }
     }
   `);
+
+  const components = {
+    code: CodeBlock,
+  };
+
   return (
-    <main className={articleContainer}>
-      <title>
-        {pageTitle} | {data.site.siteMetadata.title}
-      </title>
-      <Link to="/" style={{ textDecoration: "none" }}>
-        <div className={siteTitle}>{data.site.siteMetadata.title}</div>
-      </Link>
-      <h1 className={heading}>{pageTitle}</h1>
-      {children}
-      <Footer />
-    </main>
+    <MDXProvider components={components}>
+      <>
+        <main className={articleContainer}>
+          <title>
+            {pageTitle} | {data.site.siteMetadata.title}
+          </title>
+          <Link to="/" style={{ textDecoration: "none" }}>
+            <div className={siteTitle}>{data.site.siteMetadata.title}</div>
+          </Link>
+          <h1 className={heading}>{pageTitle}</h1>
+          {children}
+          <Footer />
+        </main>
+      </>
+    </MDXProvider>
   );
 };
 

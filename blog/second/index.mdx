@@ -10,3 +10,31 @@ featuredImage: "./cat.jpg"
 ### 経緯
 
 元々はこのブログに OGP をつけようとしていたのだけど全然できなくて、[@sosukesuzuki](https://github.com/sosukesuzuki)にもろもろ聞いたらそれがわからないのはヤバイと言われたので勉強がてら書いています
+
+```js render=true
+<div
+  style={{
+    backgroundColor: "rebeccapurple",
+    padding: "20px",
+    marginTop: "20px",
+  }}
+/>
+```
+
+```js
+//_app.js
+import { MDXProvider } from "@mdx-js/react";
+import CodeBlock from "../components/codeblock";
+
+const components = {
+  code: CodeBlock,
+};
+
+export default function App({ Component, pageProps }) {
+  return (
+    <MDXProvider components={components}>
+      <Component {...pageProps} />
+    </MDXProvider>
+  );
+}
+```
