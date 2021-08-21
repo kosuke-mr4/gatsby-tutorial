@@ -15,7 +15,7 @@ export default function Code({ children, className }) {
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
         <pre
           className={className}
-          style={{ ...style, padding: "20px", overflow: "auto" }}
+          style={{ ...style, padding: "10px", overflow: "auto" }}
         >
           {tokens.map((line, i) => (
             <div key={i} {...getLineProps({ line, key: i })}>
