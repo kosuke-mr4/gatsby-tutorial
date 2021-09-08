@@ -3,6 +3,10 @@ import { Link, graphql } from "gatsby";
 import Layout from "../components/layout";
 import { Helmet } from "react-helmet";
 
+const pageCard = {
+  borderBottom: "solid 1px #595959",
+};
+
 const BlogPage = ({ data }) => {
   return (
     <>
@@ -17,9 +21,14 @@ const BlogPage = ({ data }) => {
       </Helmet>
       <Layout pageTitle="記事一覧">
         {data.allMdx.nodes.map((node) => (
-          <article key={node.id}>
+          <article key={node.id} style={pageCard}>
             <h2>
-              <Link to={`/${node.slug}`}>{node.frontmatter.title}</Link>
+              <Link
+                to={`/${node.slug}`}
+                style={{ textDecoration: "none", color: "#595959" }}
+              >
+                {node.frontmatter.title}
+              </Link>
             </h2>
             <p>Posted: {node.frontmatter.date}</p>
           </article>

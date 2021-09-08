@@ -26,13 +26,13 @@ const ArticleLayout = ({ pageTitle, children }) => {
   return (
     <MDXProvider components={components}>
       <>
+        <Link to="/" style={{ textDecoration: "none" }}>
+          <div className={siteTitle}>{data.site.siteMetadata.title}</div>
+        </Link>
         <main className={articleContainer}>
           <title>
             {pageTitle} | {data.site.siteMetadata.title}
           </title>
-          <Link to="/" style={{ textDecoration: "none" }}>
-            <div className={siteTitle}>{data.site.siteMetadata.title}</div>
-          </Link>
           <h1 className={heading}>{pageTitle}</h1>
           {children}
           <Footer />
