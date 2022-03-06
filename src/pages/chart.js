@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { VictoryPie } from "victory";
+import { VictoryPie, VictoryTooltip, VictoryLabel } from "victory";
 
 const graphicColor = ["#388087", "#6fb3b8", "#badfe7", "#ffff00", "#000000"]; // Colors
 const wantedGraphicData = [
@@ -15,7 +15,28 @@ const wantedGraphicData = [
 
 const defaultGraphicData = [{ y: 0 }, { y: 0 }, { y: 0 }, { y: 0 }, { y: 100 }]; // last element is 100%
 
-function Chart() {
+const CustomLabel = (prop) => {
+  return (
+    <g>
+      <VictoryLabel {...prop} />
+      <VictoryTooltip
+        {...prop}
+        x={200}
+        y={250}
+        orientation="top"
+        pointerLength={0}
+        cornerRadius={50}
+        flyoutWidth={100}
+        flyoutHeight={100}
+        flyoutStyle={{ fill: graphicColor[prop.index] }}
+      />
+    </g>
+  );
+};
+
+CustomLabel.defaultEvents = VictoryTooltip.defaultEvents;
+
+const Chart = () => {
   const [graphicData, setGraphicData] = useState(defaultGraphicData);
 
   useEffect(() => {
@@ -26,12 +47,13 @@ function Chart() {
     <VictoryPie
       animate={{ easing: "exp" }}
       data={graphicData}
-      width={250}
-      height={250}
+      // width={250}
+      // height={250}
       colorScale={graphicColor}
-      innerRadius={50}
+      innerRadius={100}
+      labelComponent={<CustomLabel />}
     />
   );
-}
+};
 
 export default Chart;
