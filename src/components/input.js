@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { parse } from "papaparse";
 
 const Wrapper = styled.div`
   padding: 50px 20px;
@@ -20,9 +21,18 @@ const FileName = styled.p`
   color: #1aa1ff;
 `;
 
+const dispData = (data) => {
+  parse(data, {
+    complete: function (results) {
+      console.log(results.data);
+    },
+  });
+};
+
 const onChange = (event, cb, setFileName) => {
   cb(event);
   const targetName = event.target.files.item(0).name;
+  dispData(event.target.files[0]);
   setFileName(targetName);
 };
 
