@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { parse } from "papaparse";
 
 const Wrapper = styled.div`
-  padding: 50px 20px;
+  padding: 70px 20px;
   text-align: center;
 `;
 const Label = styled.label`
@@ -21,19 +21,69 @@ const FileName = styled.p`
   color: #1aa1ff;
 `;
 
-const dispScore = (resultsData) => {
-  resultsData.forEach((element) => {
-    console.log(element[2], ":", element[3], ":", element[7]);
+let scoreData = [];
+
+let eachDataOfScores = {
+  "A+": [],
+  A: [],
+  B: [],
+  C: [],
+  D: [],
+};
+
+const parseFIle = (data) => {
+  return new Promise((resolve, reject) => {
+    parse(data, {
+      header: true,
+      complete(results, data) {
+        resolve(results.data);
+      },
+      error(err, data) {
+        reject(err);
+      },
+    });
   });
 };
 
-const dispData = (data) => {
-  parse(data, {
-    complete: function (results) {
-      // console.log(results.data);
-      dispScore(results.data);
-    },
-  });
+const dispData = async (data) => {
+  let APt = 0;
+  let At = 0;
+  let Bt = 0;
+  let Ct = 0;
+  let Dt = 0;
+
+  console.log("before");
+  const parsedData = await parseFIle(data);
+
+  console.log(parsedData);
+  // parse(data, {
+  //   complete: function (results) {
+  //     results.data.forEach((element) => {
+  //       console.log(element[2], ":", element[3], ":", element[7]);
+  //       // switch (element[7]) {
+  //       //   case "A+":
+  //       //     APt++;
+  //       //     break;
+  //       //   case "A":
+  //       //     At++;
+  //       //     break;
+  //       //   case "B":
+  //       //     Bt++;
+  //       //     break;
+  //       //   case "C":
+  //       //     Ct++;
+  //       //     break;
+  //       //   case "D":
+  //       //     Dt++;
+  //       //     break;
+  //       //   default:
+  //       //   // pass
+  //       // }
+  //     });
+  //   },
+  // });
+
+  console.log("after");
 };
 
 const onChange = (event, cb, setFileName) => {
@@ -45,20 +95,24 @@ const onChange = (event, cb, setFileName) => {
 
 const InputFile = (props) => {
   const [filename, setFileName] = useState("選択されていません");
-  // const [isExistFile, setIsExistFile] = useState(false);
-  if (props.type !== "file") return <p>typeの指定、間違ってるよ</p>;
+  const [isExistFile, setIsExistFile] = useState(false);
+  if (props.type !== "file") return <p>typeの指定が間違ってる</p>;
   return (
-    <Wrapper>
-      <Label>
-        csvファイルを選択
-        <Input
-          {...props}
-          accept=".csv"
-          onChange={(e) => onChange(e, props.onChange, setFileName)}
-        />
-      </Label>
-      <FileName>{filename}</FileName>
-    </Wrapper>
+    <>
+      <div>twinsからダウンロードしたcsvファイルを読み込みます</div>
+      <Wrapper>
+        <Label>
+          csvファイルを選択
+          <Input
+            {...props}
+            accept=".csv"
+            onChange={(e) => onChange(e, props.onChange, setFileName)}
+          />
+        </Label>
+        <FileName>{filename}</FileName>
+      </Wrapper>
+      <div>{isExistFile ? "aruyo" : "naiyo"}</div>
+    </>
   );
 };
 
