@@ -3,13 +3,19 @@ import Layout from "../components/layout";
 import "../components/piChart";
 // import Chart from "../components/piChart";
 import InputFile from "../components/input.js";
+import { Helmet } from "react-helmet";
 
 const chartPage = () => {
   return (
-    <Layout>
-      <InputFile type="file" accept="image/*" onChange={(e) => null} />
-      {/* <Chart /> */}
-    </Layout>
+    <>
+      <Helmet>
+        <title>ScoreChart</title>
+      </Helmet>
+      <Layout pageTitle={"ScoreChart"}>
+        <InputFile type="file" accept="image/*" onChange={(e) => null} />
+        {/* <Chart /> */}
+      </Layout>
+    </>
   );
 };
 
