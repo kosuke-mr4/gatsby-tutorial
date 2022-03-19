@@ -21,10 +21,17 @@ const FileName = styled.p`
   color: #1aa1ff;
 `;
 
+const dispScore = (resultsData) => {
+  resultsData.forEach((element) => {
+    console.log(element[2], ":", element[3], ":", element[7]);
+  });
+};
+
 const dispData = (data) => {
   parse(data, {
     complete: function (results) {
-      console.log(results.data);
+      // console.log(results.data);
+      dispScore(results.data);
     },
   });
 };

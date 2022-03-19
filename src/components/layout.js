@@ -21,11 +21,13 @@ const Layout = ({ pageTitle, children }) => {
       }
     }
   `);
+  console.log(data.site.siteMetadata.title);
+  console.log(pageTitle);
   return (
     <main className={container}>
-      <title>
+      {/* <title suppressHydrationWarning>
         {pageTitle} | {data.site.siteMetadata.title}
-      </title>
+      </title> */}
       <Link to="/" style={{ textDecoration: "none" }}>
         <div className={siteTitle}>{data.site.siteMetadata.title}</div>
       </Link>
