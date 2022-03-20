@@ -1,6 +1,5 @@
 import * as React from "react";
 import Layout from "../components/layout";
-import "../components/piChart";
 // import Chart from "../components/piChart";
 import InputFile from "../components/input.js";
 import { Helmet } from "react-helmet";

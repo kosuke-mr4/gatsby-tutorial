@@ -2,13 +2,28 @@ import React, { useState, useEffect } from "react";
 
 import { VictoryPie, VictoryTooltip, VictoryLabel } from "victory";
 
-const graphicColor = ["#388087", "#6fb3b8", "#badfe7", "#ffff00", "#8b4513"]; // Colors
+const defaultAp = "#000000";
+const defaultA = "#696969";
+const defaultB = "#808080";
+const defaultC = "#a9a9a9";
+const defaultD = "#c0c0c0";
+
+const validAp = "#388087";
+const validA = "#6fb3b8";
+const validB = "#badfe7";
+const validC = "#ffff00";
+const validD = "#8b4513";
+
+const defaultGraphicColor = [defaultAp, defaultA, defaultB, defaultC, defaultD];
+
+const validGraphicColor = [validAp, validA, validB, validC, validD];
+
 const wantedGraphicData = [
   { x: "A+", y: 10 },
-  { x: "A", y: 50 },
-  { x: "B", y: 40 },
-  { x: "C", y: 40 },
-  { x: "D", y: 4 },
+  { x: "A", y: 10 },
+  { x: "B", y: 10 },
+  { x: "C", y: 10 },
+  { x: "D", y: 10 },
 ];
 // Data that we want to display
 // todo : get from csv
@@ -28,7 +43,7 @@ const CustomLabel = (prop) => {
         cornerRadius={50}
         flyoutWidth={100}
         flyoutHeight={100}
-        flyoutStyle={{ fill: graphicColor[prop.index] }}
+        flyoutStyle={{ fill: defaultGraphicColor[prop.index] }}
       />
     </g>
   );
@@ -36,7 +51,7 @@ const CustomLabel = (prop) => {
 
 CustomLabel.defaultEvents = VictoryTooltip.defaultEvents;
 
-const Chart = () => {
+const Chart = ({ graphicColor = defaultGraphicColor }) => {
   const [graphicData, setGraphicData] = useState(defaultGraphicData);
 
   useEffect(() => {
@@ -44,15 +59,17 @@ const Chart = () => {
   }, []);
 
   return (
-    <VictoryPie
-      animate={{ easing: "exp" }}
-      data={graphicData}
-      // width={250}
-      // height={250}
-      colorScale={graphicColor}
-      innerRadius={100}
-      labelComponent={<CustomLabel />}
-    />
+    <>
+      <VictoryPie
+        animate={{ easing: "exp" }}
+        data={graphicData}
+        // width={250}
+        // height={250}
+        colorScale={graphicColor}
+        innerRadius={100}
+        labelComponent={<CustomLabel />}
+      />
+    </>
   );
 };
 

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { parse } from "papaparse";
+import Chart from "../components/piChart";
 
 const Wrapper = styled.div`
   padding: 70px 20px;
@@ -19,6 +20,10 @@ const Input = styled.input`
 `;
 const FileName = styled.p`
   color: #1aa1ff;
+`;
+
+const IsExistDataState = styled.div`
+  text-align: center;
 `;
 
 let scoreData = [];
@@ -111,7 +116,8 @@ const InputFile = (props) => {
         </Label>
         <FileName>{filename}</FileName>
       </Wrapper>
-      <div>{isExistFile ? "aruyo" : "naiyo"}</div>
+      <IsExistDataState>{isExistFile ? "aruyo" : "naiyo"}</IsExistDataState>
+      <Chart />
     </>
   );
 };
