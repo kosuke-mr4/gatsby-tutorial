@@ -101,6 +101,41 @@ const onChange = (event, cb, setFileName) => {
 const InputFile = (props) => {
   const [filename, setFileName] = useState("選択されていません");
   const [isExistFile, setIsExistFile] = useState(false);
+
+  const defaultAp = "#000000";
+  const defaultA = "#696969";
+  const defaultB = "#808080";
+  const defaultC = "#a9a9a9";
+  const defaultD = "#c0c0c0";
+
+  const validAp = "#388087";
+  const validA = "#6fb3b8";
+  const validB = "#badfe7";
+  const validC = "#ffff00";
+  const validD = "#8b4513";
+
+  const defaultGraphicColor = [
+    defaultAp,
+    defaultA,
+    defaultB,
+    defaultC,
+    defaultD,
+  ];
+
+  const validGraphicColor = [validAp, validA, validB, validC, validD];
+
+  const [graphicColor, setGraphicColor] = useState(defaultGraphicColor);
+
+  const defaultGraphicData = [
+    { x: "A+", y: 10 },
+    { x: "A", y: 10 },
+    { x: "B", y: 10 },
+    { x: "C", y: 10 },
+    { x: "D", y: 10 },
+  ];
+
+  const [graphicData, setGraphicData] = useState(defaultGraphicData);
+
   if (props.type !== "file") return <p>typeの指定が間違ってる</p>;
   return (
     <>
@@ -117,7 +152,7 @@ const InputFile = (props) => {
         <FileName>{filename}</FileName>
       </Wrapper>
       <IsExistDataState>{isExistFile ? "aruyo" : "naiyo"}</IsExistDataState>
-      <Chart />
+      <Chart graphicColor={graphicColor} graphicData={graphicData} />
     </>
   );
 };

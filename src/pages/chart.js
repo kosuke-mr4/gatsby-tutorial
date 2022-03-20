@@ -11,7 +11,7 @@ const chartPage = () => {
         <title>ScoreChart</title>
       </Helmet>
       <Layout pageTitle={"ScoreChart"}>
-        <InputFile type="file" accept="image/*" onChange={(e) => null} />
+        <InputFile type="file" onChange={(e) => null} />
         {/* <Chart /> */}
       </Layout>
     </>

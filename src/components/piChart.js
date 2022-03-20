@@ -51,11 +51,11 @@ const CustomLabel = (prop) => {
 
 CustomLabel.defaultEvents = VictoryTooltip.defaultEvents;
 
-const Chart = ({ graphicColor = defaultGraphicColor }) => {
+const Chart = (props) => {
   const [graphicData, setGraphicData] = useState(defaultGraphicData);
 
   useEffect(() => {
-    setGraphicData(wantedGraphicData); // Setting the data that we want to display
+    setGraphicData(props.graphicData); // Setting the data that we want to display
   }, []);
 
   return (
@@ -65,7 +65,7 @@ const Chart = ({ graphicColor = defaultGraphicColor }) => {
         data={graphicData}
         // width={250}
         // height={250}
-        colorScale={graphicColor}
+        colorScale={props.graphicColor}
         innerRadius={100}
         labelComponent={<CustomLabel />}
       />
