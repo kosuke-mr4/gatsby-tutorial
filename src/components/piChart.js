@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 import { VictoryPie, VictoryTooltip, VictoryLabel } from "victory";
 
@@ -9,21 +9,6 @@ const validC = "#ffff00";
 const validD = "#8b4513";
 
 const validGraphicColor = [validAp, validA, validB, validC, validD];
-
-// const validGraphicColor = [validAp, validA, validB, validC, validD];
-
-// const wantedGraphicData = [
-//   { x: "A+", y: 10 },
-//   { x: "A", y: 10 },
-//   { x: "B", y: 10 },
-//   { x: "C", y: 10 },
-//   { x: "D", y: 10 },
-// ];
-
-// Data that we want to display
-// todo : get from csv
-
-const defaultGraphicData = [{ y: 0 }, { y: 0 }, { y: 0 }, { y: 0 }, { y: 100 }]; // last element is 100%
 
 const CustomLabel = (prop) => {
   return (
@@ -47,24 +32,11 @@ const CustomLabel = (prop) => {
 CustomLabel.defaultEvents = VictoryTooltip.defaultEvents;
 
 const Chart = (props) => {
-  // const [graphicData, setGraphicData] = useState(
-  //   props.graphicData == defaultGraphicData
-  //     ? defaultGraphicData
-  //     : props.graphicData
-  // );
-
-  // useEffect(() => {
-  //   setGraphicData(props.graphicData); // Setting the data that we want to display
-  //   console.log(props.graphicData);
-  // }, []);
-
   return (
     <>
       <VictoryPie
         animate={{ easing: "exp" }}
         data={props.graphicData}
-        // width={250}
-        // height={250}
         colorScale={props.graphicColor}
         innerRadius={100}
         labelComponent={<CustomLabel />}

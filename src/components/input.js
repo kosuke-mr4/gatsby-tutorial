@@ -26,16 +26,6 @@ const IsExistDataState = styled.div`
   text-align: center;
 `;
 
-// let scoreData = [];
-
-// let eachDataOfScores = {
-//   "A+": [],
-//   A: [],
-//   B: [],
-//   C: [],
-//   D: [],
-// };
-
 const parseFIle = (data) => {
   return new Promise((resolve, reject) => {
     parse(data, {
@@ -101,7 +91,6 @@ const dispData = async (data, setGraphicData, setGraphicColor) => {
       // pass
     }
   });
-  // console.log(APt, At, Bt, Ct, Dt, Pt, Ft);
 
   let aggregatedData = [
     { x: "A+", y: APt },
