@@ -50,7 +50,7 @@ const parseFIle = (data) => {
   });
 };
 
-const dispData = async (data, setGraphicData) => {
+const dispData = async (data, setGraphicData, setGraphicColor) => {
   let APt = 0;
   let At = 0;
   let Bt = 0;
@@ -58,6 +58,14 @@ const dispData = async (data, setGraphicData) => {
   let Dt = 0;
   let Pt = 0;
   let Ft = 0;
+
+  const validAp = "#388087";
+  const validA = "#6fb3b8";
+  const validB = "#badfe7";
+  const validC = "#ffff00";
+  const validD = "#8b4513";
+
+  const validGraphicColor = [validAp, validA, validB, validC, validD];
 
   const subjectsNumber = "科目番号";
   const subjectsName = "科目名";
@@ -93,7 +101,7 @@ const dispData = async (data, setGraphicData) => {
       // pass
     }
   });
-  console.log(APt, At, Bt, Ct, Dt, Pt, Ft);
+  // console.log(APt, At, Bt, Ct, Dt, Pt, Ft);
 
   let aggregatedData = [
     { x: "A+", y: APt },
@@ -106,13 +114,13 @@ const dispData = async (data, setGraphicData) => {
   ];
 
   setGraphicData(aggregatedData);
-  console.log(aggregatedData);
+  setGraphicColor(validGraphicColor);
 };
 
-const onChange = (event, cb, setFileName, setGraphicData) => {
+const onChange = (event, cb, setFileName, setGraphicData, setGraphicColor) => {
   cb(event);
   const targetName = event.target.files.item(0).name;
-  dispData(event.target.files[0], setGraphicData);
+  dispData(event.target.files[0], setGraphicData, setGraphicColor);
   setFileName(targetName);
 };
 
@@ -126,12 +134,6 @@ const InputFile = (props) => {
   const defaultC = "#a9a9a9";
   const defaultD = "#c0c0c0";
 
-  const validAp = "#388087";
-  const validA = "#6fb3b8";
-  const validB = "#badfe7";
-  const validC = "#ffff00";
-  const validD = "#8b4513";
-
   const defaultGraphicColor = [
     defaultAp,
     defaultA,
@@ -139,8 +141,6 @@ const InputFile = (props) => {
     defaultC,
     defaultD,
   ];
-
-  const validGraphicColor = [validAp, validA, validB, validC, validD];
 
   const [graphicColor, setGraphicColor] = useState(defaultGraphicColor);
 
@@ -165,7 +165,13 @@ const InputFile = (props) => {
             {...props}
             accept=".csv"
             onChange={(e) =>
-              onChange(e, props.onChange, setFileName, setGraphicData)
+              onChange(
+                e,
+                props.onChange,
+                setFileName,
+                setGraphicData,
+                setGraphicColor
+              )
             }
           />
         </Label>

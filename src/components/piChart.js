@@ -2,19 +2,13 @@ import React, { useState, useEffect } from "react";
 
 import { VictoryPie, VictoryTooltip, VictoryLabel } from "victory";
 
-const defaultAp = "#000000";
-const defaultA = "#696969";
-const defaultB = "#808080";
-const defaultC = "#a9a9a9";
-const defaultD = "#c0c0c0";
-
 const validAp = "#388087";
 const validA = "#6fb3b8";
 const validB = "#badfe7";
 const validC = "#ffff00";
 const validD = "#8b4513";
 
-const defaultGraphicColor = [defaultAp, defaultA, defaultB, defaultC, defaultD];
+const validGraphicColor = [validAp, validA, validB, validC, validD];
 
 // const validGraphicColor = [validAp, validA, validB, validC, validD];
 
@@ -44,7 +38,7 @@ const CustomLabel = (prop) => {
         cornerRadius={50}
         flyoutWidth={100}
         flyoutHeight={100}
-        flyoutStyle={{ fill: defaultGraphicColor[prop.index] }}
+        flyoutStyle={{ fill: validGraphicColor[prop.index] }}
       />
     </g>
   );
