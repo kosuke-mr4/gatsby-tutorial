@@ -23,7 +23,7 @@ const CustomLabel = (prop) => {
         cornerRadius={50}
         flyoutWidth={100}
         flyoutHeight={100}
-        flyoutStyle={{ fill: validGraphicColor[prop.index] }}
+        flyoutStyle={{ fill: "#0000" }}
       />
     </g>
   );
