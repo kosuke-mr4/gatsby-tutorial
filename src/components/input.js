@@ -26,15 +26,15 @@ const IsExistDataState = styled.div`
   text-align: center;
 `;
 
-let scoreData = [];
+// let scoreData = [];
 
-let eachDataOfScores = {
-  "A+": [],
-  A: [],
-  B: [],
-  C: [],
-  D: [],
-};
+// let eachDataOfScores = {
+//   "A+": [],
+//   A: [],
+//   B: [],
+//   C: [],
+//   D: [],
+// };
 
 const parseFIle = (data) => {
   return new Promise((resolve, reject) => {
@@ -56,39 +56,44 @@ const dispData = async (data) => {
   let Bt = 0;
   let Ct = 0;
   let Dt = 0;
+  let Pt = 0;
+  let Ft = 0;
 
-  console.log("before");
+  const subjectsNumber = "科目番号";
+  const subjectsName = "科目名";
+  const creditNumber = "単位数";
+  const totalEvaluation = "総合評価";
+
   const parsedData = await parseFIle(data);
 
-  console.log(parsedData);
-  // parse(data, {
-  //   complete: function (results) {
-  //     results.data.forEach((element) => {
-  //       console.log(element[2], ":", element[3], ":", element[7]);
-  //       // switch (element[7]) {
-  //       //   case "A+":
-  //       //     APt++;
-  //       //     break;
-  //       //   case "A":
-  //       //     At++;
-  //       //     break;
-  //       //   case "B":
-  //       //     Bt++;
-  //       //     break;
-  //       //   case "C":
-  //       //     Ct++;
-  //       //     break;
-  //       //   case "D":
-  //       //     Dt++;
-  //       //     break;
-  //       //   default:
-  //       //   // pass
-  //       // }
-  //     });
-  //   },
-  // });
-
-  console.log("after");
+  parsedData.forEach((element) => {
+    switch (element[totalEvaluation]) {
+      case "A+":
+        APt += parseFloat(element[creditNumber]);
+        break;
+      case "A":
+        At += parseFloat(element[creditNumber]);
+        break;
+      case "B":
+        Bt += parseFloat(element[creditNumber]);
+        break;
+      case "C":
+        Ct += parseFloat(element[creditNumber]);
+        break;
+      case "D":
+        Dt += parseFloat(element[creditNumber]);
+        break;
+      case "P":
+        Pt += parseFloat(element[creditNumber]);
+        break;
+      case "F":
+        Ft += parseFloat(element[creditNumber]);
+        break;
+      default:
+      // pass
+    }
+  });
+  console.log(APt, At, Bt, Ct, Dt, Pt, Ft);
 };
 
 const onChange = (event, cb, setFileName) => {
