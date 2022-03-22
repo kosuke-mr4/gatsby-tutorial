@@ -50,7 +50,7 @@ const parseFIle = (data) => {
   });
 };
 
-const dispData = async (data) => {
+const dispData = async (data, setGraphicData) => {
   let APt = 0;
   let At = 0;
   let Bt = 0;
@@ -94,12 +94,25 @@ const dispData = async (data) => {
     }
   });
   console.log(APt, At, Bt, Ct, Dt, Pt, Ft);
+
+  let aggregatedData = [
+    { x: "A+", y: APt },
+    { x: "A", y: At },
+    { x: "B", y: Bt },
+    { x: "C", y: Ct },
+    { x: "D", y: Dt },
+    // { x: "P", y: Pt },
+    // { x: "F", y: Ft },
+  ];
+
+  setGraphicData(aggregatedData);
+  console.log(aggregatedData);
 };
 
-const onChange = (event, cb, setFileName) => {
+const onChange = (event, cb, setFileName, setGraphicData) => {
   cb(event);
   const targetName = event.target.files.item(0).name;
-  dispData(event.target.files[0]);
+  dispData(event.target.files[0], setGraphicData);
   setFileName(targetName);
 };
 
@@ -151,7 +164,9 @@ const InputFile = (props) => {
           <Input
             {...props}
             accept=".csv"
-            onChange={(e) => onChange(e, props.onChange, setFileName)}
+            onChange={(e) =>
+              onChange(e, props.onChange, setFileName, setGraphicData)
+            }
           />
         </Label>
         <FileName>{filename}</FileName>

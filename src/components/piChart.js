@@ -16,15 +16,16 @@ const validD = "#8b4513";
 
 const defaultGraphicColor = [defaultAp, defaultA, defaultB, defaultC, defaultD];
 
-const validGraphicColor = [validAp, validA, validB, validC, validD];
+// const validGraphicColor = [validAp, validA, validB, validC, validD];
 
-const wantedGraphicData = [
-  { x: "A+", y: 10 },
-  { x: "A", y: 10 },
-  { x: "B", y: 10 },
-  { x: "C", y: 10 },
-  { x: "D", y: 10 },
-];
+// const wantedGraphicData = [
+//   { x: "A+", y: 10 },
+//   { x: "A", y: 10 },
+//   { x: "B", y: 10 },
+//   { x: "C", y: 10 },
+//   { x: "D", y: 10 },
+// ];
+
 // Data that we want to display
 // todo : get from csv
 
@@ -52,17 +53,22 @@ const CustomLabel = (prop) => {
 CustomLabel.defaultEvents = VictoryTooltip.defaultEvents;
 
 const Chart = (props) => {
-  const [graphicData, setGraphicData] = useState(defaultGraphicData);
+  // const [graphicData, setGraphicData] = useState(
+  //   props.graphicData == defaultGraphicData
+  //     ? defaultGraphicData
+  //     : props.graphicData
+  // );
 
-  useEffect(() => {
-    setGraphicData(props.graphicData); // Setting the data that we want to display
-  }, []);
+  // useEffect(() => {
+  //   setGraphicData(props.graphicData); // Setting the data that we want to display
+  //   console.log(props.graphicData);
+  // }, []);
 
   return (
     <>
       <VictoryPie
         animate={{ easing: "exp" }}
-        data={graphicData}
+        data={props.graphicData}
         // width={250}
         // height={250}
         colorScale={props.graphicColor}
