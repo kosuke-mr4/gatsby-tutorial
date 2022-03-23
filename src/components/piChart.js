@@ -24,7 +24,7 @@ const CalcPer = (data) => {
     const thisCredit = parseFloat(data.data[data.index]["y"]);
     const creditPer = (thisCredit / totalValidCredit) * 100;
 
-    return creditPer.toString().substring(0, 5);
+    return creditPer.toString().substring(0, 5) + " %";
   }
 };
 
@@ -35,7 +35,14 @@ const CustomLabel = (prop) => {
       <VictoryLabel {...prop} />
       <VictoryTooltip
         {...prop}
-        text={prop.text + "\n" + CalcPer(prop)}
+        text={
+          prop.text +
+          " : " +
+          prop.datum["y"] +
+          " credits" +
+          "\n" +
+          CalcPer(prop)
+        }
         x={200}
         y={250}
         orientation="top"

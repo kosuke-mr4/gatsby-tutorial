@@ -22,9 +22,9 @@ const FileName = styled.p`
   color: #1aa1ff;
 `;
 
-const IsExistDataState = styled.div`
-  text-align: center;
-`;
+// const IsExistDataState = styled.div`
+//   text-align: center;
+// `;
 
 const parseFIle = (data) => {
   return new Promise((resolve, reject) => {
@@ -115,7 +115,7 @@ const onChange = (event, cb, setFileName, setGraphicData, setGraphicColor) => {
 
 const InputFile = (props) => {
   const [filename, setFileName] = useState("選択されていません");
-  const [isExistFile, setIsExistFile] = useState(false);
+  // const [isExistFile, setIsExistFile] = useState(false);
 
   const defaultAp = "#000000";
   const defaultA = "#696969";
@@ -166,7 +166,7 @@ const InputFile = (props) => {
         </Label>
         <FileName>{filename}</FileName>
       </Wrapper>
-      <IsExistDataState>{isExistFile ? "aruyo" : "naiyo"}</IsExistDataState>
+      {/* <IsExistDataState>{isExistFile ? "aruyo" : "naiyo"}</IsExistDataState> */}
       <Chart graphicColor={graphicColor} graphicData={graphicData} />
     </>
   );
