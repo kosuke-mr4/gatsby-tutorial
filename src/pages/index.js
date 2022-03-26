@@ -3,6 +3,8 @@ import { Link, graphql } from "gatsby";
 import Layout from "../components/layout";
 import { Helmet } from "react-helmet";
 
+import cat from "../images/shigotoneko.jpg";
+
 const pageCard = {
   borderBottom: "solid 1px #595959",
 };
@@ -14,11 +16,17 @@ const BlogPage = ({ data }) => {
       <Helmet>
         <meta property="og:site_name" content="murakami blog" />
         <meta name="description" content="村上のブログ" />
-        <meta property="og:image" content="src/images/shigotoneko.jpg" />
+        <meta
+          property="og:image"
+          content={`${data.site.siteMetadata.siteUrl}${cat}`}
+        />
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:title" content="murakami blog" />
         <meta name="twitter:description" content="村上のブログ" />
-        <meta name="twitter:image" content="src/images/shigotoneko.jpg" />
+        <meta
+          name="twitter:image"
+          content={`${data.site.siteMetadata.siteUrl}${cat}`}
+        />
       </Helmet>
       <Layout pageTitle="記事一覧">
         {data.allMdx.nodes.map((node) => (
