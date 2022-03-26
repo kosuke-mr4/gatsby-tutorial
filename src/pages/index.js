@@ -8,6 +8,7 @@ const pageCard = {
 };
 
 const BlogPage = ({ data }) => {
+  console.log(data.site.siteMetadata.siteUrl);
   return (
     <>
       <Helmet>
@@ -48,6 +49,11 @@ export const query = graphql`
         }
         id
         slug
+      }
+    }
+    site {
+      siteMetadata {
+        siteUrl
       }
     }
   }
