@@ -21,8 +21,7 @@ const Layout = ({ pageTitle, children }) => {
       }
     }
   `);
-  console.log(data.site.siteMetadata.title);
-  console.log(pageTitle);
+
   return (
     <main className={container}>
       {/* <title suppressHydrationWarning>

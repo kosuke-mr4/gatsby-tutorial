@@ -10,7 +10,6 @@ const pageCard = {
 };
 
 const BlogPage = ({ data }) => {
-  console.log(data.site.siteMetadata.siteUrl);
   return (
     <>
       <Helmet>

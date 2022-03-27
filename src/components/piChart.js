@@ -29,7 +29,6 @@ const CalcPer = (data) => {
 };
 
 const CustomLabel = (prop) => {
-  console.log(prop);
   return (
     <g>
       <VictoryLabel {...prop} />
