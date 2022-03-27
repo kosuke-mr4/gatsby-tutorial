@@ -16,7 +16,7 @@ const BlogPost = ({ data }) => {
       <Helmet>
         <meta property="og:site_name" content={title} />
         <meta property="og:image" content={imagePath} />
-        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
         <meta
           name="twitter:image"
