@@ -18,7 +18,10 @@ const BlogPost = ({ data }) => {
         <meta property="og:image" content={imagePath} />
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:title" content={title} />
-        <meta name="twitter:image" content={imagePath} />
+        <meta
+          name="twitter:image"
+          content={`${data.site.siteMetadata.siteUrl}${imagePath}`}
+        />
       </Helmet>
       <ArticleLayout pageTitle={title}>
         <p>Posted: {data.mdx.frontmatter.date}</p>
@@ -41,6 +44,11 @@ export const query = graphql`
             gatsbyImageData
           }
         }
+      }
+    }
+    site {
+      siteMetadata {
+        siteUrl
       }
     }
   }
