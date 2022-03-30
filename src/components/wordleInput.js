@@ -3,11 +3,14 @@ import styled from "styled-components";
 
 const Wrapper = styled.div`
   display: flex;
-  align-items: center;
-  padding: 0.1em;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 85%;
+  padding-bottom: 20px;
 `;
 const Label = styled.label`
   padding: 0.1em;
+
   cursor: pointer;
 `;
 const Input = styled.input.attrs({
@@ -39,19 +42,20 @@ const WordleInput = () => {
 
   return (
     <>
-      <LetterArray />
-      <LetterArray />
-      <LetterArray />
+      <LetterArray length={5} />
+      <LetterArray length={5} />
+      <LetterArray length={10} />
     </>
   );
 };
 
-const LetterArray = () => {
+const LetterArray = (props) => {
+  console.log(props);
   return (
-    <div>
+    <div style={{ display: "flex" }}>
+      <ColoredBox />
       <Wrapper>
-        <ColoredBox />
-        {[...Array(5)].map((_, index) => (
+        {[...Array(props.length)].map((_, index) => (
           <div key={index}>
             <Label>
               <Input></Input>
