@@ -44,20 +44,25 @@ const SearchButton = styled.button`
 `;
 
 const WordleInput = () => {
-  const defaultFiveState = [...Array(5)].map((_, ind) => ({
+  const defaultGreenState = [...Array(5)].map((_, ind) => ({
     index: ind,
     isValid: false,
     value: "",
   }));
-  const defaultFifteenState = [...Array(15)].map((_, ind) => ({
+  const defaultYellowState = [...Array(5)].map((_, ind) => ({
+    index: ind,
+    isValid: false,
+    value: "",
+  }));
+  const defaultGrayState = [...Array(15)].map((_, ind) => ({
     index: ind,
     isValid: false,
     value: "",
   }));
 
-  const [greenState, setGreenState] = useState(defaultFiveState);
-  const [yellowState, setYellowState] = useState(defaultFiveState);
-  const [grayState, setGrayState] = useState(defaultFifteenState);
+  const [greenState, setGreenState] = useState(defaultGreenState);
+  const [yellowState, setYellowState] = useState(defaultYellowState);
+  const [grayState, setGrayState] = useState(defaultGrayState);
 
   return (
     <>
@@ -82,8 +87,8 @@ const WordleInput = () => {
 
       <SearchButton
         type="button"
-        //onClick={log(greenState, yellowState, grayState)}
-        onClick={() => logA()}
+        onClick={() => log(greenState, yellowState, grayState)}
+        //onClick={() => logA()}
       >
         hohohoo
       </SearchButton>
@@ -91,13 +96,13 @@ const WordleInput = () => {
   );
 };
 
-// function log(gre, ye, gray) {
-//   console.log(gre, ye, gray);
-// }
-
-function logA() {
-  console.log("hoho");
+function log(gre, ye, gray) {
+  console.log(gre, ye, gray);
 }
+
+// function logA() {
+//   console.log("hoho");
+// }
 
 const onChange = (event, indexKey, setColorState) => {
   console.log(event.target.value);
