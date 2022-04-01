@@ -44,17 +44,20 @@ const SearchButton = styled.button`
 `;
 
 const WordleInput = () => {
-  const defaultState = [
-    { index: 0, isValid: false, value: "" },
-    { index: 1, isValid: false, value: "" },
-    { index: 2, isValid: false, value: "" },
-    { index: 3, isValid: false, value: "" },
-    { index: 4, isValid: false, value: "" },
-  ];
+  const defaultFiveState = [...Array(5)].map((_, ind) => ({
+    index: ind,
+    isValid: false,
+    value: "",
+  }));
+  const defaultFifteenState = [...Array(15)].map((_, ind) => ({
+    index: ind,
+    isValid: false,
+    value: "",
+  }));
 
-  const [greenState, setGreenState] = useState(defaultState);
-  const [yellowState, setYellowState] = useState(defaultState);
-  const [grayState, setGrayState] = useState(defaultState);
+  const [greenState, setGreenState] = useState(defaultFiveState);
+  const [yellowState, setYellowState] = useState(defaultFiveState);
+  const [grayState, setGrayState] = useState(defaultFifteenState);
 
   return (
     <>
@@ -77,10 +80,10 @@ const WordleInput = () => {
         setColorState={setGrayState}
       />
 
-      {/* button の onclickが効かねえ？なんで */}
       <SearchButton
         type="button"
-        onClick={log(greenState, yellowState, grayState)}
+        //onClick={log(greenState, yellowState, grayState)}
+        onClick={() => logA()}
       >
         hohohoo
       </SearchButton>
@@ -88,8 +91,12 @@ const WordleInput = () => {
   );
 };
 
-function log(gre, ye, gray) {
-  console.log(gre, ye, gray);
+// function log(gre, ye, gray) {
+//   console.log(gre, ye, gray);
+// }
+
+function logA() {
+  console.log("hoho");
 }
 
 const onChange = (event, indexKey, setColorState) => {
@@ -122,16 +129,5 @@ const LetterArray = (props) => {
     </div>
   );
 };
-
-// const ButtonComponent = (greenState, yellowState, grayState) => {
-//   return (
-//     <SearchButton
-//       type="button"
-//       onClick={console.log(greenState, yellowState, grayState)}
-//     >
-//       gogogoogogogogog
-//     </SearchButton>
-//   );
-// };
 
 export default WordleInput;
