@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { WORDS } from "../configs/words.js";
 
 const Wrapper = styled.div`
   display: flex;
@@ -24,7 +25,7 @@ const Input = styled.input.attrs({
   margin: 0px;
   text-align: center;
   border-radius: 10px;
-  background-color: ${(props) => props.color};
+  //background-color: ${(props) => props.color};
 `;
 
 const ColoredBox = styled.div`
@@ -87,8 +88,10 @@ const WordleInput = () => {
 
       <SearchButton
         type="button"
-        onClick={() => log(greenState, yellowState, grayState)}
-        //onClick={() => logA()}
+        onClick={() =>
+          makeRegularExpression(greenState, yellowState, grayState)
+        }
+        //onClick={() => log(greenState, yellowState, grayState)}
       >
         hohohoo
       </SearchButton>
@@ -96,20 +99,92 @@ const WordleInput = () => {
   );
 };
 
-function log(gre, ye, gray) {
-  console.log(gre, ye, gray);
+// 考えること
+
+// 入力受け取って状態が変わったことを検知して検索結果を表示する
+// 入力があるかないかで ? null : <Answer /> みたいな？
+
+// 候補をstateとして持ちたい
+
+// function log(gre, ye, gray) {
+//   console.log(gre, ye, gray);
+// }
+
+function makeRegularExpression(green, yellow, gray) {
+  //  console.log(arr);
+  const greenResult = checkGreenWords(green, WORDS);
+  //console.log(greenResult);
+  const yellowResult = checkYellowWords(yellow, greenResult);
+  //console.log(yellowResult);
+  const grayResult = checkGrayWords(gray, yellowResult);
+  //console.log(grayResult);
+  return grayResult;
 }
 
-// function logA() {
-//   console.log("hoho");
-// }
+function checkGreenWords(greenArray, WORDS) {
+  let regExpText = "";
+  greenArray.forEach((el) => {
+    const isDotOrCharacter = el.isValid ? el.value : ".";
+    regExpText += isDotOrCharacter;
+  });
+
+  const reg = RegExp("^" + regExpText + "$");
+  // console.log(reg);
+
+  const res = WORDS.filter(RegExp.prototype.test, reg);
+  // console.log(res);
+  return res;
+}
+
+function checkYellowWords(yellowArray, WORDS) {
+  let regExpNotContainedParticularPoint = "";
+  yellowArray.forEach((el) => {
+    const isContained = el.isValid ? el.value : ".";
+    // (?=.*l)
+    regExpNotContainedParticularPoint += el.isValid ? `(?=.*${el.value})` : "";
+  });
+  const reg1 = RegExp("^" + regExpNotContainedParticularPoint);
+  // console.log(reg1);
+  const res1 = WORDS.filter(RegExp.prototype.test, reg1);
+  // console.log(res1);
+
+  let isDifferentParticularCharacter = Array(5).fill(".");
+  yellowArray.forEach((el) => {
+    if (el.isValid) {
+      //[^p]
+      isDifferentParticularCharacter[el.index] = `[^${el.value}]`;
+    }
+  });
+  const reg2 = RegExp("^" + isDifferentParticularCharacter.join(""));
+  // console.log(reg2);
+  const res2 = res1.filter(RegExp.prototype.test, reg2);
+  // console.log(res2);
+
+  return res2;
+}
+
+function checkGrayWords(grayArray, WORDS) {
+  let regExpNotContained = [];
+  grayArray.forEach((el) => {
+    if (el.isValid) {
+      regExpNotContained.push(el.value);
+    }
+  });
+  //^(?!.*a|b).*$
+  const reg = RegExp("^(?!.*(" + regExpNotContained.join("|") + ")).+$");
+  //   console.log(reg);
+
+  const res = WORDS.filter(RegExp.prototype.test, reg);
+  //console.log(res);
+  return res;
+}
 
 const onChange = (event, indexKey, setColorState) => {
   console.log(event.target.value);
   setColorState((prevState) => {
     prevState[indexKey].value = event.target.value;
     prevState[indexKey].isValid = event.target.value !== "" ? true : false;
-    console.log(prevState);
+    // console.log(prevState);
     return prevState;
   });
 };
