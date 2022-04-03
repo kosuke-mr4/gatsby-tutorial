@@ -18,14 +18,14 @@ const Input = styled.input.attrs({
   maxLength: "1",
 })`
   border: 5px solid #000;
-  border-radius: 2px;
   color: #000000;
   font-size: 4rem;
   width: 4.1rem;
   margin: 0px;
   text-align: center;
   border-radius: 10px;
-  //background-color: ${(props) => props.color};
+  text-transform: uppercase;
+  // background-color: ${(props) => props.color};
 `;
 
 const ColoredBox = styled.div`
@@ -49,10 +49,24 @@ const SearchButton = styled.button`
   font-size: 1em;
   margin: 1em;
   padding: 0.25em 1em;
+  border: 2px solid #000;
+  border-radius: 10px;
+  width: 30%;
+  margin: 0 auto;
+`;
+
+const WordsWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+`;
+
+const Word = styled.div`
+  margin-top: 1em;
   border: 2px solid black;
   border-radius: 3px;
   width: 30%;
-  margin: 0 auto;
+  text-align: center;
 `;
 
 const WordleInput = () => {
@@ -125,37 +139,36 @@ const WordleInput = () => {
   );
 };
 
-const ReturnArrayElement = (props) => {
-  console.log(props.resultState);
-  return (
-    <>
-      <div>
-        {props.resultState.map((word, index) => (
-          <div key={index}>{word}</div>
-        ))}
-      </div>
-    </>
-  );
-};
-
-// 考えること
-
-// searchボタンでresultstateを更新して、stateを表示用のコンポーネントに渡すだけでよくないかこれ
-// WordleInputの中に置く必要があってcssがめんどくさそうではある
-
 // function log(resultState) {
 //   console.log(resultState);
 // }
 
+// bug
+// 無入力時にsearchすると全て吐き出す
+
+// adv
+// 入力されたところだけ色をつける : Styledcomponentでeventを持ってこれる?
+
+const ReturnArrayElement = (props) => {
+  // console.log(props.resultState);
+  return (
+    <>
+      <WordsWrapper>
+        {props.resultState.map((word, index) => (
+          <Word key={index}>{word.toUpperCase()}</Word>
+        ))}
+      </WordsWrapper>
+    </>
+  );
+};
+
 function makeRegularExpression(green, yellow, gray, setResultState) {
-  //  console.log(arr);
   const greenResult = checkGreenWords(green, WORDS);
-  //console.log(greenResult);
+  // console.log(greenResult);
   const yellowResult = checkYellowWords(yellow, greenResult);
-  //console.log(yellowResult);
+  // console.log(yellowResult);
   const grayResult = checkGrayWords(gray, yellowResult);
   // console.log(grayResult);
-  // return grayResult;
   setResultState(grayResult);
 }
 
@@ -208,13 +221,16 @@ function checkGrayWords(grayArray, WORDS) {
       regExpNotContained.push(el.value);
     }
   });
-  //^(?!.*a|b).*$
-  const reg = RegExp("^(?!.*(" + regExpNotContained.join("|") + ")).+$");
-  //   console.log(reg);
-
-  const res = WORDS.filter(RegExp.prototype.test, reg);
-  //console.log(res);
-  return res;
+  if (regExpNotContained.length) {
+    //^(?!.*a|b).*$
+    const reg = RegExp("^(?!.*(" + regExpNotContained.join("|") + ")).+$");
+    //   console.log(reg);
+    const res = WORDS.filter(RegExp.prototype.test, reg);
+    //console.log(res);
+    return res;
+  } else {
+    return WORDS;
+  }
 }
 
 const onChange = (event, indexKey, setColorState) => {
