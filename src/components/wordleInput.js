@@ -36,12 +36,23 @@ const ColoredBox = styled.div`
   margin-right: 0.5rem;
 `;
 
+const Outer = styled.div`
+  display: block;
+  //width: 100%;
+  padding: 1em 0em;
+`;
+
 const SearchButton = styled.button`
+  display: block;
+  text-align: center;
+  background-color: white;
   font-size: 1em;
   margin: 1em;
   padding: 0.25em 1em;
-  border: 2px solid palevioletred;
+  border: 2px solid black;
   border-radius: 3px;
+  width: 30%;
+  margin: 0 auto;
 `;
 
 const WordleInput = () => {
@@ -65,6 +76,8 @@ const WordleInput = () => {
   const [yellowState, setYellowState] = useState(defaultYellowState);
   const [grayState, setGrayState] = useState(defaultGrayState);
 
+  const [resultState, setResultState] = useState([]);
+
   return (
     <>
       <LetterArray
@@ -86,39 +99,64 @@ const WordleInput = () => {
         setColorState={setGrayState}
       />
 
-      <SearchButton
-        type="button"
-        onClick={() =>
-          makeRegularExpression(greenState, yellowState, grayState)
-        }
-        //onClick={() => log(greenState, yellowState, grayState)}
-      >
-        hohohoo
-      </SearchButton>
+      <Outer>
+        <SearchButton
+          type="button"
+          onClick={() =>
+            makeRegularExpression(
+              greenState,
+              yellowState,
+              grayState,
+              setResultState
+            )
+          }
+          //onClick={() => log(greenState, yellowState, grayState)}
+        >
+          Search 🔍
+        </SearchButton>
+      </Outer>
+
+      {/* <SearchButton type="button" onClick={() => log(resultState)}>
+        log
+      </SearchButton> */}
+
+      <ReturnArrayElement resultState={resultState} />
+    </>
+  );
+};
+
+const ReturnArrayElement = (props) => {
+  console.log(props.resultState);
+  return (
+    <>
+      <div>
+        {props.resultState.map((word, index) => (
+          <div key={index}>{word}</div>
+        ))}
+      </div>
     </>
   );
 };
 
 // 考えること
 
-// 入力受け取って状態が変わったことを検知して検索結果を表示する
-// 入力があるかないかで ? null : <Answer /> みたいな？
+// searchボタンでresultstateを更新して、stateを表示用のコンポーネントに渡すだけでよくないかこれ
+// WordleInputの中に置く必要があってcssがめんどくさそうではある
 
-// 候補をstateとして持ちたい
-
-// function log(gre, ye, gray) {
-//   console.log(gre, ye, gray);
+// function log(resultState) {
+//   console.log(resultState);
 // }
 
-function makeRegularExpression(green, yellow, gray) {
+function makeRegularExpression(green, yellow, gray, setResultState) {
   //  console.log(arr);
   const greenResult = checkGreenWords(green, WORDS);
   //console.log(greenResult);
   const yellowResult = checkYellowWords(yellow, greenResult);
   //console.log(yellowResult);
   const grayResult = checkGrayWords(gray, yellowResult);
-  //console.log(grayResult);
-  return grayResult;
+  // console.log(grayResult);
+  // return grayResult;
+  setResultState(grayResult);
 }
 
 function checkGreenWords(greenArray, WORDS) {
@@ -180,7 +218,7 @@ function checkGrayWords(grayArray, WORDS) {
 }
 
 const onChange = (event, indexKey, setColorState) => {
-  console.log(event.target.value);
+  // console.log(event.target.value);
   setColorState((prevState) => {
     prevState[indexKey].value = event.target.value;
     prevState[indexKey].isValid = event.target.value !== "" ? true : false;
