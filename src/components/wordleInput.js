@@ -145,6 +145,7 @@ const WordleInput = () => {
 
 // bug
 // 無入力時にsearchすると全て吐き出す
+// アルファベット以外の入力を拒否
 
 // adv
 // 入力されたところだけ色をつける : Styledcomponentでeventを持ってこれる?
@@ -190,7 +191,6 @@ function checkGreenWords(greenArray, WORDS) {
 function checkYellowWords(yellowArray, WORDS) {
   let regExpNotContainedParticularPoint = "";
   yellowArray.forEach((el) => {
-    const isContained = el.isValid ? el.value : ".";
     // (?=.*l)
     regExpNotContainedParticularPoint += el.isValid ? `(?=.*${el.value})` : "";
   });
@@ -236,7 +236,7 @@ function checkGrayWords(grayArray, WORDS) {
 const onChange = (event, indexKey, setColorState) => {
   // console.log(event.target.value);
   setColorState((prevState) => {
-    prevState[indexKey].value = event.target.value;
+    prevState[indexKey].value = event.target.value.toLowerCase();
     prevState[indexKey].isValid = event.target.value !== "" ? true : false;
     // console.log(prevState);
     return prevState;
