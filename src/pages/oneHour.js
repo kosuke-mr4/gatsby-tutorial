@@ -1,73 +1,104 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Layout from "../components/layout";
 import dayjs from "dayjs";
 import styled from "styled-components";
+
+import { VictoryPie } from "victory";
 
 const LoggerButton = styled.button`
   text-align: center;
 `;
 
+const LeftTimeText = styled.div`
+  text-align: center;
+`;
+
+const useIntervalBy60s = (callback) => {
+  const callbackRef = useRef(callback);
+  useEffect(() => {
+    callbackRef.current = callback; // 新しいcallbackをrefに格納！
+  }, [callback]);
+
+  useEffect(() => {
+    const tick = () => {
+      callbackRef.current();
+    };
+    const id = setInterval(tick, 60000);
+    return () => {
+      clearInterval(id);
+    };
+  }, []); //refはミュータブルなので依存配列に含めなくてもよい
+};
+
 const OneHourPage = () => {
   const [savedDate, setSavedDate] = useState("");
-  const [currentDate, setCurrentDate] = useState("");
-
   const [passedMinute, setPassedMinute] = useState(0);
+
+  // localstrageに時間があった場合実行中とみなす、終了時のResetボタンでのみ終了を受容するようにする
 
   useEffect(() => {
     let localDate = localStorage.getItem("date");
     const startDate = dayjs().format(); // 現在時刻
 
     if (localDate == null) {
-      localStorage.setItem("date", startDate);
-      setSavedDate(startDate);
-      setCurrentDate(startDate);
+      console.log("null local data");
     } else {
+      console.log("already exist");
       console.log(localDate);
       setSavedDate(localDate);
-      setCurrentDate(startDate);
-      SetDiff(savedDate, currentDate, setPassedMinute);
+      SetDiff(savedDate, setPassedMinute);
     }
   });
 
-  // 60秒ごとにcurrentDateをc更新
-  // まず円を描画する
-  // 円の角度をstate参照でできるようにする
+  // 60秒ごとにPassedMinuteを更新
+  useIntervalBy60s(() => SetDiff(savedDate, setPassedMinute));
 
   return (
     <>
       <Layout pageTitle={"one hour timer"}>
-        <LoggerButton
-          onClick={() => SetDiff(savedDate, currentDate, setPassedMinute)}
-        >
+        <VictoryPie startAngle={6 * passedMinute} data={[{ x: " ", y: 360 }]} />
+
+        <LeftTimeText>{60 - passedMinute} minutes left</LeftTimeText>
+
+        <LoggerButton onClick={() => SetDiff(savedDate, setPassedMinute)}>
           logger
         </LoggerButton>
 
         <LoggerButton
           onClick={() =>
-            console.log(
-              "savedDate : ",
-              savedDate,
-              "\ncurrentDate : ",
-              currentDate,
-              "\n sub : ",
-              passedMinute
-            )
+            console.log("savedDate : ", savedDate, "\n sub : ", passedMinute)
           }
         >
           state logger
         </LoggerButton>
+
+        <LoggerButton onClick={() => localStorage.removeItem("date")}>
+          delete localStorage
+        </LoggerButton>
+
+        <LoggerButton onClick={() => Start(setSavedDate)}>start</LoggerButton>
       </Layout>
     </>
   );
 };
 
-const SetDiff = (savedDate, currentDate, setPassedMinute) => {
+const Start = (setSavedDate) => {
+  const startDate = dayjs().format();
+  localStorage.setItem("date", startDate);
+  setSavedDate(startDate);
+  console.log("set!");
+};
+
+const SetDiff = (savedDate, setPassedMinute) => {
   const savedDateObj = dayjs(savedDate);
-  const currentDateObj = dayjs(currentDate);
+  const currentDateObj = dayjs();
 
   const passed = currentDateObj.diff(savedDateObj, "minute");
-  console.log(passed);
-  setPassedMinute(passed);
+
+  if (passed) {
+    console.log("setdiff", passed);
+    setPassedMinute(passed);
+  }
 };
 
 export default OneHourPage;
