@@ -56,6 +56,11 @@ const OneHourPage = () => {
   return (
     <>
       <Layout pageTitle={"one hour timer"}>
+        {/* 
+        savedDateがnull => timerは存在しません
+        savedDateが非null && passedが60未満 => その分時間が経過したタイマー
+        savedDateが非null && passedが60以上 => timeup画面
+         */}
         <VictoryPie startAngle={6 * passedMinute} data={[{ x: " ", y: 360 }]} />
 
         <LeftTimeText>{60 - passedMinute} minutes left</LeftTimeText>
@@ -72,6 +77,7 @@ const OneHourPage = () => {
           state logger
         </LoggerButton>
 
+        {/* stateを書き換える処理を追記する */}
         <LoggerButton onClick={() => localStorage.removeItem("date")}>
           delete localStorage
         </LoggerButton>
