@@ -3,7 +3,7 @@ import Layout from "../components/layout";
 import dayjs from "dayjs";
 import styled from "styled-components";
 
-import { VictoryPie } from "victory";
+import { VictoryPie, VictoryLabel } from "victory";
 
 const LoggerButton = styled.button`
   text-align: center;
@@ -28,6 +28,27 @@ const useIntervalBy60s = (callback) => {
       clearInterval(id);
     };
   }, []); //refはミュータブルなので依存配列に含めなくてもよい
+};
+
+const Notimer = () => {
+  return (
+    <>
+      <svg viewBox="0 0 400 400">
+        <VictoryPie
+          standalone={false}
+          innerRadius={140}
+          data={[{ x: " ", y: 360 }]}
+        />
+        <VictoryLabel
+          textAnchor="middle"
+          style={{ fontSize: 100 }}
+          x={200}
+          y={200}
+          text="×"
+        />
+      </svg>
+    </>
+  );
 };
 
 const OneHourPage = () => {
@@ -62,8 +83,10 @@ const OneHourPage = () => {
         savedDateが非null && passedが60以上 => timeup画面
          */}
         <VictoryPie startAngle={6 * passedMinute} data={[{ x: " ", y: 360 }]} />
-
         <LeftTimeText>{60 - passedMinute} minutes left</LeftTimeText>
+
+        <Notimer></Notimer>
+        <LeftTimeText>No timer set</LeftTimeText>
 
         <LoggerButton onClick={() => SetDiff(savedDate, setPassedMinute)}>
           logger
