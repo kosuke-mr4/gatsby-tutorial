@@ -44,11 +44,67 @@ const Notimer = () => {
           style={{ fontSize: 100 }}
           x={200}
           y={200}
-          text="×"
+          text="⛔"
         />
       </svg>
     </>
   );
+};
+
+const TimeOver = () => {
+  return (
+    <>
+      <svg viewBox="0 0 400 400">
+        <VictoryPie
+          standalone={false}
+          innerRadius={140}
+          data={[{ x: " ", y: 360 }]}
+        />
+        <VictoryLabel
+          textAnchor="middle"
+          style={{ fontSize: 100 }}
+          x={200}
+          y={200}
+          text="🔄"
+        />
+      </svg>
+    </>
+  );
+};
+
+const HandleTimer = (props) => {
+  /* 
+        savedDateがnull => timerは存在しません
+        savedDateが非null && passedが60未満 => その分時間が経過したタイマー
+        savedDateが非null && passedが60以上 => timeup画面
+         */
+  if (props.savedDate == null) {
+    return (
+      <>
+        <Notimer></Notimer>
+        <LeftTimeText>No timer set</LeftTimeText>
+      </>
+    );
+  } else {
+    if (props.passedMinute < 60) {
+      return (
+        <>
+          <VictoryPie
+            startAngle={6 * props.passedMinute}
+            data={[{ x: " ", y: 360 }]}
+          />
+          <LeftTimeText>{60 - props.passedMinute} minutes left</LeftTimeText>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <TimeOver></TimeOver>
+          <LeftTimeText>One hour passed</LeftTimeText>
+        </>
+      );
+    }
+  }
 };
 
 const OneHourPage = () => {
@@ -74,6 +130,8 @@ const OneHourPage = () => {
   // 60秒ごとにPassedMinuteを更新
   useIntervalBy60s(() => SetDiff(savedDate, setPassedMinute));
 
+  console.log(passedMinute);
+
   return (
     <>
       <Layout pageTitle={"one hour timer"}>
@@ -82,11 +140,8 @@ const OneHourPage = () => {
         savedDateが非null && passedが60未満 => その分時間が経過したタイマー
         savedDateが非null && passedが60以上 => timeup画面
          */}
-        <VictoryPie startAngle={6 * passedMinute} data={[{ x: " ", y: 360 }]} />
-        <LeftTimeText>{60 - passedMinute} minutes left</LeftTimeText>
 
-        <Notimer></Notimer>
-        <LeftTimeText>No timer set</LeftTimeText>
+        <HandleTimer passedMinute={passedMinute} savedDate={savedDate} />
 
         <LoggerButton onClick={() => SetDiff(savedDate, setPassedMinute)}>
           logger
