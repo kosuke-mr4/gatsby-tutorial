@@ -47,6 +47,9 @@ const Notimer = () => {
           text="⛔"
         />
       </svg>
+      {/* <LoggerButton onClick={() => Start(setSavedDate, setPassedMinute)}>
+        start
+      </LoggerButton> */}
     </>
   );
 };
@@ -74,10 +77,10 @@ const TimeOver = () => {
 
 const HandleTimer = (props) => {
   /* 
-        savedDateがnull => timerは存在しません
-        savedDateが非null && passedが60未満 => その分時間が経過したタイマー
-        savedDateが非null && passedが60以上 => timeup画面
-         */
+  savedDateがnull => timerは存在しません
+  savedDateが非null && passedが60未満 => その分時間が経過したタイマー
+  savedDateが非null && passedが60以上 => timeup画面
+  */
   if (props.savedDate == null) {
     return (
       <>
@@ -115,7 +118,6 @@ const OneHourPage = () => {
 
   useEffect(() => {
     let localDate = localStorage.getItem("date");
-    const startDate = dayjs().format(); // 現在時刻
 
     if (localDate == null) {
       console.log("null local data");
@@ -135,15 +137,9 @@ const OneHourPage = () => {
   return (
     <>
       <Layout pageTitle={"one hour timer"}>
-        {/* 
-        savedDateがnull => timerは存在しません
-        savedDateが非null && passedが60未満 => その分時間が経過したタイマー
-        savedDateが非null && passedが60以上 => timeup画面
-         */}
-
         <HandleTimer passedMinute={passedMinute} savedDate={savedDate} />
 
-        <LoggerButton onClick={() => SetDiff(savedDate, setPassedMinute)}>
+        {/* <LoggerButton onClick={() => SetDiff(savedDate, setPassedMinute)}>
           logger
         </LoggerButton>
 
@@ -153,24 +149,33 @@ const OneHourPage = () => {
           }
         >
           state logger
-        </LoggerButton>
+        </LoggerButton> */}
 
         {/* stateを書き換える処理を追記する */}
-        <LoggerButton onClick={() => localStorage.removeItem("date")}>
+        <LoggerButton
+          onClick={() => (localStorage.removeItem("date"), setSavedDate(null))}
+        >
           delete localStorage
         </LoggerButton>
 
-        <LoggerButton onClick={() => Start(setSavedDate)}>start</LoggerButton>
+        <LoggerButton onClick={() => Start(setSavedDate, setPassedMinute)}>
+          start
+        </LoggerButton>
       </Layout>
     </>
   );
 };
 
-const Start = (setSavedDate) => {
+const Start = (setSavedDate, setPassedMinute) => {
   const startDate = dayjs().format();
   localStorage.setItem("date", startDate);
   setSavedDate(startDate);
   console.log("set!");
+  InitDiff(setPassedMinute);
+};
+
+const InitDiff = (setPassedMinute) => {
+  setPassedMinute(0);
 };
 
 const SetDiff = (savedDate, setPassedMinute) => {
