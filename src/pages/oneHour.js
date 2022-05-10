@@ -6,7 +6,21 @@ import styled from "styled-components";
 import { VictoryPie, VictoryLabel } from "victory";
 
 const LoggerButton = styled.button`
+  display: block;
   text-align: center;
+  background-color: white;
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border: 2px solid #000;
+  border-radius: 10px;
+  width: 30%;
+  margin: 0 auto;
+`;
+
+const Outer = styled.div`
+  display: block;
+  padding: 1em 0em;
 `;
 
 const LeftTimeText = styled.div`
@@ -30,7 +44,7 @@ const useIntervalBy60s = (callback) => {
   }, []); //refはミュータブルなので依存配列に含めなくてもよい
 };
 
-const Notimer = () => {
+const Notimer = ({ setSavedDate, setPassedMinute }) => {
   return (
     <>
       <svg viewBox="0 0 400 400">
@@ -47,14 +61,17 @@ const Notimer = () => {
           text="⛔"
         />
       </svg>
-      {/* <LoggerButton onClick={() => Start(setSavedDate, setPassedMinute)}>
-        start
-      </LoggerButton> */}
+      <LeftTimeText>No timer set</LeftTimeText>
+      <Outer>
+        <LoggerButton onClick={() => Start(setSavedDate, setPassedMinute)}>
+          start
+        </LoggerButton>
+      </Outer>
     </>
   );
 };
 
-const TimeOver = () => {
+const TimeOver = ({ setSavedDate }) => {
   return (
     <>
       <svg viewBox="0 0 400 400">
@@ -71,41 +88,52 @@ const TimeOver = () => {
           text="🔄"
         />
       </svg>
+      <LeftTimeText>One hour passed</LeftTimeText>
+      <Outer>
+        <LoggerButton
+          onClick={() => (localStorage.removeItem("date"), setSavedDate(null))}
+        >
+          delete localStorage(Reset button)
+        </LoggerButton>
+      </Outer>
+    </>
+  );
+};
+
+const ProgressTimer = ({ passedMinute, setSavedDate }) => {
+  return (
+    <>
+      <VictoryPie startAngle={6 * passedMinute} data={[{ x: " ", y: 360 }]} />
+      <LeftTimeText>{60 - passedMinute} minutes left</LeftTimeText>
+      <Outer>
+        <LoggerButton
+          onClick={() => (localStorage.removeItem("date"), setSavedDate(null))}
+        >
+          Reset
+        </LoggerButton>
+      </Outer>
     </>
   );
 };
 
 const HandleTimer = (props) => {
-  /* 
-  savedDateがnull => timerは存在しません
-  savedDateが非null && passedが60未満 => その分時間が経過したタイマー
-  savedDateが非null && passedが60以上 => timeup画面
-  */
   if (props.savedDate == null) {
     return (
-      <>
-        <Notimer></Notimer>
-        <LeftTimeText>No timer set</LeftTimeText>
-      </>
+      <Notimer
+        setSavedDate={props.setSavedDate}
+        setPassedMinute={props.setPassedMinute}
+      />
     );
   } else {
     if (props.passedMinute < 60) {
       return (
-        <>
-          <VictoryPie
-            startAngle={6 * props.passedMinute}
-            data={[{ x: " ", y: 360 }]}
-          />
-          <LeftTimeText>{60 - props.passedMinute} minutes left</LeftTimeText>
-        </>
+        <ProgressTimer
+          passedMinute={props.passedMinute}
+          setSavedDate={props.setSavedDate}
+        />
       );
     } else {
-      return (
-        <>
-          <TimeOver></TimeOver>
-          <LeftTimeText>One hour passed</LeftTimeText>
-        </>
-      );
+      return <TimeOver setSavedDate={props.setSavedDate} />;
     }
   }
 };
@@ -137,30 +165,22 @@ const OneHourPage = () => {
   return (
     <>
       <Layout pageTitle={"one hour timer"}>
-        <HandleTimer passedMinute={passedMinute} savedDate={savedDate} />
+        <HandleTimer
+          passedMinute={passedMinute}
+          savedDate={savedDate}
+          setSavedDate={setSavedDate}
+          setPassedMinute={setPassedMinute}
+        />
 
-        {/* <LoggerButton onClick={() => SetDiff(savedDate, setPassedMinute)}>
-          logger
-        </LoggerButton>
-
-        <LoggerButton
-          onClick={() =>
-            console.log("savedDate : ", savedDate, "\n sub : ", passedMinute)
-          }
-        >
-          state logger
-        </LoggerButton> */}
-
-        {/* stateを書き換える処理を追記する */}
-        <LoggerButton
+        {/* <LoggerButton
           onClick={() => (localStorage.removeItem("date"), setSavedDate(null))}
         >
-          delete localStorage
+          Reset button
         </LoggerButton>
 
         <LoggerButton onClick={() => Start(setSavedDate, setPassedMinute)}>
           start
-        </LoggerButton>
+        </LoggerButton> */}
       </Layout>
     </>
   );
