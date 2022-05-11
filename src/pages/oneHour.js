@@ -21,10 +21,22 @@ const LoggerButton = styled.button`
 const Outer = styled.div`
   display: block;
   padding: 1em 0em;
+  text-align: center;
 `;
 
 const LeftTimeText = styled.div`
   text-align: center;
+`;
+
+const Input = styled.textarea`
+  padding: 0.5em;
+  resize: none;
+  /* color: palevioletred;
+  background: papayawhip; */
+  width: 60%;
+  height: 2rem;
+  border-radius: 10px;
+  border: 2px solid;
 `;
 
 const useIntervalBy60s = (callback) => {
@@ -71,6 +83,22 @@ const Notimer = ({ setSavedDate, setPassedMinute }) => {
   );
 };
 
+const TweetContent = () => {
+  const textRef = useRef(null);
+  return (
+    <>
+      <Outer>
+        <Input ref={textRef} />
+      </Outer>
+      <Outer>
+        <LoggerButton onClick={() => alert(textRef.current.value)}>
+          checkrefwork(tweet)
+        </LoggerButton>
+      </Outer>
+    </>
+  );
+};
+
 const TimeOver = ({ setSavedDate }) => {
   return (
     <>
@@ -88,12 +116,16 @@ const TimeOver = ({ setSavedDate }) => {
           text="🔄"
         />
       </svg>
+
       <LeftTimeText>One hour passed</LeftTimeText>
+
+      <TweetContent></TweetContent>
+
       <Outer>
         <LoggerButton
           onClick={() => (localStorage.removeItem("date"), setSavedDate(null))}
         >
-          delete localStorage(Reset button)
+          Reset
         </LoggerButton>
       </Outer>
     </>
