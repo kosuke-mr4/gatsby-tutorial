@@ -34,7 +34,7 @@ const Input = styled.textarea`
   /* color: palevioletred;
   background: papayawhip; */
   width: 60%;
-  height: 2rem;
+  height: 4rem;
   border-radius: 10px;
   border: 2px solid;
 `;
@@ -88,11 +88,11 @@ const TweetContent = () => {
   return (
     <>
       <Outer>
-        <Input ref={textRef} />
+        <Input ref={textRef} placeholder="1時間で何した？" />
       </Outer>
       <Outer>
         <LoggerButton onClick={() => alert(textRef.current.value)}>
-          checkrefwork(tweet)
+          tweet
         </LoggerButton>
       </Outer>
     </>
