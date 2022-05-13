@@ -83,17 +83,39 @@ const Notimer = ({ setSavedDate, setPassedMinute }) => {
   );
 };
 
+// https://twitter.com/intent/tweet/?text=${shareText}&url=${url}
+// https://twitter.com/intent/tweet/?text=ウンコ&url=localhost
+
+// wip : add break
+
+const echo = (hoge) => {
+  console.log(hoge);
+  const firstText = "1時間で";
+  const secondText = hoge;
+  const thirdText = "をしました";
+
+  const textArray = [firstText, secondText, thirdText];
+  const tweetText = textArray.join("\n");
+  return tweetText;
+};
+
 const TweetContent = () => {
-  const textRef = useRef(null);
+  const textRef = useRef("");
+  let url = `https://twitter.com/intent/tweet/?text=${echo(
+    textRef.current.value
+  )}&url=localhost`;
   return (
     <>
       <Outer>
         <Input ref={textRef} placeholder="1時間で何した？" />
       </Outer>
       <Outer>
-        <LoggerButton onClick={() => alert(textRef.current.value)}>
+        {/* <LoggerButton onClick={() => alert(textRef.current.value)}>
           tweet
-        </LoggerButton>
+        </LoggerButton> */}
+        <a href={url} target="_blank" rel="noopener noreferrer">
+          Tweet
+        </a>
       </Outer>
     </>
   );
