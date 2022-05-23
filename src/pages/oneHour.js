@@ -88,10 +88,10 @@ const Notimer = ({ setSavedDate, setPassedMinute }) => {
 
 // wip : add break
 
-const echo = (hoge) => {
-  console.log(hoge);
+const echo = (value) => {
+  console.log(value);
   const firstText = "1時間で";
-  const secondText = hoge;
+  const secondText = value;
   const thirdText = "をしました";
 
   const textArray = [firstText, secondText, thirdText];
@@ -103,16 +103,16 @@ const TweetContent = () => {
   const textRef = useRef("");
   let url = `https://twitter.com/intent/tweet/?text=${echo(
     textRef.current.value
-  )}&url=localhost`;
+  )}&url=${window.location.href}`;
   return (
     <>
       <Outer>
         <Input ref={textRef} placeholder="1時間で何した？" />
       </Outer>
       <Outer>
-        {/* <LoggerButton onClick={() => alert(textRef.current.value)}>
-          tweet
-        </LoggerButton> */}
+        <LoggerButton onClick={() => alert(textRef.current.value)}>
+          tweetTEST
+        </LoggerButton>
         <a href={url} target="_blank" rel="noopener noreferrer">
           Tweet
         </a>
