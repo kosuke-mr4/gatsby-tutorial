@@ -88,8 +88,8 @@ const Notimer = ({ setSavedDate, setPassedMinute }) => {
 
 // wip : add break
 
-const echo = (value) => {
-  console.log(value);
+const makeDones = (value) => {
+  console.log("makeDones", value);
   const firstText = "1時間で";
   const secondText = value;
   const thirdText = "をしました";
@@ -99,23 +99,52 @@ const echo = (value) => {
   return tweetText;
 };
 
+const makeUrl = (dones) => {
+  console.log("makeUrl", dones);
+  const baseurl = "https://twitter.com/intent/tweet/?text=";
+  const done = makeDones(dones);
+  const url = "&url=";
+  const cur = window.location.href;
+
+  const fixedUrl = baseurl + done + url + cur;
+
+  return fixedUrl;
+};
+
 const TweetContent = () => {
   const textRef = useRef("");
-  let url = `https://twitter.com/intent/tweet/?text=${echo(
-    textRef.current.value
-  )}&url=${window.location.href}`;
+
+  let textValue;
+
+  // const [text, setText] = useState("");
+  // let url = `https://twitter.com/intent/tweet/?text=${echo(
+  //   textRef.current.value
+  // )}&url=${window.location.href}`;
   return (
     <>
       <Outer>
         <Input ref={textRef} placeholder="1時間で何した？" />
       </Outer>
       <Outer>
-        <LoggerButton onClick={() => alert(textRef.current.value)}>
+        <LoggerButton onClick={() => console.log(textRef.current.value)}>
           tweetTEST
         </LoggerButton>
-        <a href={url} target="_blank" rel="noopener noreferrer">
+        <a
+          href={makeUrl(textRef.current.value)}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           Tweet
         </a>
+        {/* <LoggerButton
+          onClick={window.open(
+            "https://www.google.com/?hl=ja",
+            "_blank",
+            "noreferrer"
+          )}
+        >
+          2nd Tweet test
+        </LoggerButton> */}
       </Outer>
     </>
   );
